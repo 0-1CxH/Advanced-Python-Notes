@@ -1,0 +1,1 @@
+Notes that demostarates the Python language mechanisms and advanced programming methods. 
