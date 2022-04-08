@@ -1,4 +1,4 @@
-from collections.abc import Iterator, Generator
+import collections.abc
 
 
 class NaturalNumbers:
@@ -23,15 +23,15 @@ class NaturalNumbers:
 
 
 # use collections.abc.Iterator to check whether class NaturalNumbers follows the iterator protocol
-# it prints True, it follows the iterator protocol
-print(isinstance(NaturalNumbers(), Iterator))
+# the following assertion is True, so that the class follows the iterator protocol
+assert isinstance(NaturalNumbers(), collections.abc.Iterator) is True
 
 
 iter_times = 5
 # use a "for" clause to iterate through NaturalNumberGenerator
 nn1 = NaturalNumbers(iter_times)
-for _ in nn1:
-    print(_)
+for value in nn1:
+    print(value)
 
 # the nature of "for" is:
 # (1) call iter() on the object (equals to call object's __iter__() method)
@@ -48,6 +48,8 @@ while True:
         break
 
 
+# ----APPENDIX----------------------------------------------------------
+# Note: this part shall be viewed after viewing the "two_generators" chapter
 class NaturalNumberGenerator:
     """
     This is the same thing as NaturalNumbers,
@@ -70,12 +72,12 @@ class NaturalNumberGenerator:
 
 # the class NaturalNumberGenerator does not follow iterator protocol
 # since it does not implement __next__ method
-print(isinstance(NaturalNumberGenerator(), Iterator))
-# but the return value of its __iter__ function is a Generator
+assert isinstance(NaturalNumberGenerator(), collections.abc.Iterator) is False
+# but the return value of its __iter__ function is a Generator (hence also an Iterator)
 # since function with "yield" returns a generator
-print(isinstance(NaturalNumberGenerator().__iter__(), Generator))
+assert isinstance(NaturalNumberGenerator().__iter__(), collections.abc.Iterator) is True
+assert isinstance(NaturalNumberGenerator().__iter__(), collections.abc.Generator) is True
 
 
-nn3 = NaturalNumberGenerator(5)
-print([_ for _ in nn3])
-
+nng = NaturalNumberGenerator(5)
+print([_ for _ in nng])
