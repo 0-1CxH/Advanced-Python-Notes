@@ -1,3 +1,6 @@
+from collections.abc import Iterator, Generator
+
+
 class NaturalNumbers:
     """
     This class follow the iterator protocol:
@@ -17,6 +20,11 @@ class NaturalNumbers:
         if self.internal_state >= self.max_iter_times:
             raise StopIteration
         return self.internal_state
+
+
+# use collections.abc.Iterator to check whether class NaturalNumbers follows the iterator protocol
+# it prints True, it follows the iterator protocol
+print(isinstance(NaturalNumbers(), Iterator))
 
 
 iter_times = 5
@@ -58,6 +66,14 @@ class NaturalNumberGenerator:
                 yield self.internal_state
             else:
                 break
+
+
+# the class NaturalNumberGenerator does not follow iterator protocol
+# since it does not implement __next__ method
+print(isinstance(NaturalNumberGenerator(), Iterator))
+# but the return value of its __iter__ function is a Generator
+# since function with "yield" returns a generator
+print(isinstance(NaturalNumberGenerator().__iter__(), Generator))
 
 
 nn3 = NaturalNumberGenerator(5)
