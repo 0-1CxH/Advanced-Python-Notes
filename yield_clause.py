@@ -105,11 +105,5 @@ ave.send(None)  # send a None to stop average_gen(), it "return count" to proxy,
 # and received by "ret = yield", now "ret" is assigned with the retval ("count" in average_gen())
 
 
-
-
-
-
-
-
 # TODO: ----APPENDIX---------------------------------------
-# asyncio
+# asyncio, yield from
