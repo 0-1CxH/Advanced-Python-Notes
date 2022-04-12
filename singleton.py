@@ -1,3 +1,4 @@
+import threading
 from functools import wraps
 
 
@@ -135,10 +136,12 @@ assert singleton_instance_1 is singleton_instance_2
 def singleton_decorator(cls):
     _singleton_object = None
 
+    @wraps
     def get_new_object(*args, **kwargs):
-        nonlocal _singleton_object
-        if not _singleton_object:
-            _singleton_object = cls.__new__(cls, *args, **kwargs)
+        with threading.Lock():  # lock acquired to ensure thread safety
+            nonlocal _singleton_object
+            if not _singleton_object:
+                _singleton_object = cls.__new__(cls, *args, **kwargs)
         return _singleton_object
 
     return get_new_object
