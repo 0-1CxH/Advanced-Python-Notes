@@ -79,5 +79,5 @@ assert isinstance(NaturalNumberGenerator().__iter__(), collections.abc.Iterator)
 assert isinstance(NaturalNumberGenerator().__iter__(), collections.abc.Generator) is True
 
 
-nng = NaturalNumberGenerator(5)
+nng = NaturalNumberGenerator(iter_times)
 print([_ for _ in nng])
