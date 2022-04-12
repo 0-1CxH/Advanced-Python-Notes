@@ -113,3 +113,7 @@ obj.__class__=<class 'object'>
 print(f'{isinstance(type, object), isinstance(object, type)=}')
 print(f'{isinstance(object, object), isinstance(type, type)=}')
 # It is like the old question: which comes first, chicken or egg?
+# actually, "type" is metaclass, a factory class that makes "class"es
+# (manufacture class objects and giving them class names)
+# "object" is a class, the base of every class, it has type "type",
+# and any class bases on it has type "type" to specify that this is a class
