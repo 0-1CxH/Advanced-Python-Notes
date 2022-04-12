@@ -1,3 +1,6 @@
+from functools import wraps
+
+
 class CommonClass:
     # this part runs for once
     print(f'Entering CommonClass creating process')
@@ -43,6 +46,8 @@ print('\n')
 step_instantiate.__init__(0)
 assert 'object_property' in dir(step_instantiate)
 print('\n')
+# when using the <class_name>(init value), it automatically calls __new__ followed by __init__
+# so that the arg list of __new__ and __init__ should be compatible in the case
 
 print("*"*20)
 
@@ -124,3 +129,26 @@ Return initialized object <__main__.SingletonClass object at 0x0000023E438A6E20>
 # (use "is" to make sure it shares the same memory address)
 assert singleton_instance_1.object_property == 5
 assert singleton_instance_1 is singleton_instance_2
+
+
+# The above SingletonClass that bases on the CommonClass can be changed to decorator
+def singleton_decorator(cls):
+    _singleton_object = None
+
+    def get_new_object(*args, **kwargs):
+        nonlocal _singleton_object
+        if not _singleton_object:
+            _singleton_object = cls.__new__(cls, *args, **kwargs)
+        return _singleton_object
+
+    return get_new_object
+
+
+@singleton_decorator
+class DecoratedCommonClass:
+    def __init__(self):
+        print(f"object address {hash(self)}")
+        pass
+
+
+assert DecoratedCommonClass() is DecoratedCommonClass()
