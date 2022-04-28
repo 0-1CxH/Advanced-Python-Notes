@@ -124,3 +124,23 @@ assert isinstance(CircleVersion2.radius, property)
 assert not isinstance(CircleVersion2.radius, int)
 assert not isinstance(circle_v2_instance.radius, property)
 assert isinstance(circle_v2_instance.radius, int)
+print("-"*20)
+
+
+# (4) lazy evaluation
+class Dividing:
+    def __init__(self, den_, div_):
+        self.denominator = den_
+        self.divider = div_
+
+    @property
+    def result(self):
+        return self.denominator/self.divider
+
+
+div_instance = Dividing(5, 2)
+# the "result" is still property object until ww get it by __get__
+print(Dividing.__dict__['result'])
+print(div_instance.result)
+div_instance = Dividing(5, 0)
+# the "result" = denominator/divider is not valid but there is no error raised since the evaluation is lazy
